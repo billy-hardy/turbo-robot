@@ -46,17 +46,26 @@ class Model:
 	def __init__(self):
 		self.decs = []
 		self.objs = []
+		self.const = []
 	def add_vars(self): pass
 	def get_ind(self):
-		ret = []
-		for i,d in enumerate(self.decs):
-			ret.append(d.get_val())
-		return ret
+		for _ in xrange(100):
+			ret = []
+			for d in self.decs:
+				ret.append(d.get_val())
+			if self.valid(ret):
+				return ret
+		return None
 	def get_dep(self, ind):
 		ret = []
-		for i,o in enumerate(self.objs):
+		for o in self.objs:
 			ret.append(o.calc(ind))
 		return ret
+	def valid(self, args):
+		for f in self.const:
+			if not f(args):
+				return False
+		return True
 	def score(self, s):
 		ret = 0.0
 		for i,o in enumerate(self.objs):

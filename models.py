@@ -5,6 +5,17 @@ from model import *
 minimize = lambda x: (1-x)
 maximize = lambda x: x
 
+class schaffer(Model):
+	def __init__(self):
+		Model.__init__(self)
+		schaffer.add_vars(self)
+	def add_vars(self):
+		f1 = lambda args: args[0]**2
+		f2 = lambda args: (args[0]-2)**2
+		self.decs = [Dec("x1",-(10**5),10**5)]
+		self.objs = [Obj("f1", f1, maximize, 4.8, 10.0),
+								 Obj("f2", f2, maximize, 0.0, 15.0)]
+
 class kursawe(Model):
 	def __init__(self):
 		Model.__init__(self)
@@ -91,3 +102,38 @@ class zdt2(Model):
 		self.objs = [Obj("f1",f1,minimize,0,1),
 								 Obj("f2",f2,minimize,-10,10)]
 
+class golinski(Model):
+	def __init__(self):
+		Model.__init__(self)
+		golinski.add_vars(self)
+	def add_vars(self):
+		def f1(args):
+			ret = 1.0
+			ret *= 0.7854*args[0]*(args[1])**2
+			ret *= 10*(args[2]**2)/3 + 14.933*args[2] - 43.0934
+			ret += -1.508*args[0]*(args[5]**2 + args[6]**2)
+			ret += 7.477*(args[5]**3 + args[6]**3)
+			ret += 0.7854*(args[3]*(args[5]**2) + args[4]*(args[6]**2))
+			return ret
+		def f2(args):
+			ret = 745.0*args[3]/(args[1]*args[2])
+			ret += 1.69*(10**7)
+			ret = ret**.5
+			ret /= 0.1*(args[5]**3)
+			return ret
+		self.decs = [Dec("x1", 2.6, 3.6),
+								 Dec("x2", 0.7, 0.8),
+								 Dec("x3", 17.0, 28.0),
+								 Dec("x4", 7.3, 8.3),
+								 Dec("x5", 7.3, 8.3),
+								 Dec("x6", 2.9, 3.9),
+								 Dec("x7", 5.0, 5.5)]
+		self.objs = [Obj("f1", f1, minimize, 0.0, 10.0),
+								 Obj("f2", f2, minimize, 0.0, 10.0)]
+		self.const = [lambda args: 0 <= args[0] + args[1] - 2,
+									lambda args: 0 <= 6 - args[0] - args[1],
+									lambda args: 0 <= 2 - args[1] + args[0],
+									lambda args: 0 <= 2 - args[0] + 3*args[1],
+									lambda args: 0 <= 4 - (args[2]-3)**2 - args[3],
+									lambda args: 0 <= (args[4]-3)**3 + args[5] - 4]
+		
