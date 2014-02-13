@@ -2,7 +2,6 @@ import sys
 sys.dont_write_bytecode=True
 import math
 import random
-import copy
 
 rand = random.random
 urand = random.uniform
@@ -81,12 +80,11 @@ class Model:
 			ret += "mean %s: %0.2f\n" % (o.name, m[i]/len(l[::len(self.objs)]))
 		return ret
 
-def str(ind, dep, e):
+def to_str(ind, dep, e):
 	args = []
-	out = ""
 	for i in xrange(len(ind)):
 		args += ['%0.2f'% (ind[i])]
 	for i in xrange(len(dep)):
 		args += ['%0.2f'% (dep[i])]
-	out = '(%s)' % (', '.join(args)) 
+	out = '(%s)' % (', '.join(args))
 	return out + ' e = %0.2f' % (e)

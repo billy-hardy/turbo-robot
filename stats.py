@@ -1,11 +1,8 @@
 import sys
-import random
 sys.dont_write_bytecode=True
 from model import *
 
-rand = random.random
-
-class Cache:
+class run:
 	def __init__(self, length=128):
 		self.ave = []
 		self.ind_ave = []
@@ -49,7 +46,7 @@ class Cache:
 			var += (mean - e)**2
 		return var
 
-class Collect:
+class eras:
 	def __init__(self, eps, coh):
 		self.log = []
 		self.epsilon = eps

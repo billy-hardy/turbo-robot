@@ -1,7 +1,7 @@
 import sys
 sys.dont_write_bytecode=True
 from models import *
-from cache import *
+from stats import *
 
 def max_walk():
 	sol = None
