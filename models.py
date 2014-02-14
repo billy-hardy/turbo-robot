@@ -9,17 +9,19 @@ class schaffer(Model):
 	def __init__(self):
 		Model.__init__(self)
 		schaffer.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		f1 = lambda args: args[0]**2
 		f2 = lambda args: (args[0]-2)**2
 		self.decs = [Dec("x1",-(10**5),10**5)]
-		self.objs = [Obj("f1", f1, maximize, 4.8, 10.0),
-								 Obj("f2", f2, maximize, 0.0, 15.0)]
+		self.objs = [Obj("f1", f1, maximize, 0.0, 10.0),
+								 Obj("f2", f2, maximize, 0.0, 10.0)]
 
 class kursawe(Model):
 	def __init__(self):
 		Model.__init__(self)
 		kursawe.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			ret = 0.0
@@ -35,13 +37,14 @@ class kursawe(Model):
 		self.decs = [Dec("x1",-5,5), 
 								 Dec("x2",-5,5), 
 								 Dec("x3",-5,5)]
-		self.objs = [Obj("f1", f1, maximize, 4.8, 10.0),
-								 Obj("f2", f2, maximize, 0.0, 15.0)]
+		self.objs = [Obj("f1", f1, maximize, 0.0, 10.0),
+								 Obj("f2", f2, maximize, 0.0, 10.0)]
 
 class fonseca(Model):
 	def __init__(self):
 		Model.__init__(self)
 		fonseca.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			temp = 0.0
@@ -65,6 +68,7 @@ class zdt1(Model):
 	def __init__(self):
 		Model.__init__(self)
 		zdt1.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			return args[0]
@@ -85,6 +89,7 @@ class zdt2(Model):
 	def __init__(self):
 		Model.__init__(self)
 		zdt2.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			return args[0]
@@ -106,6 +111,7 @@ class golinski(Model):
 	def __init__(self):
 		Model.__init__(self)
 		golinski.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			ret = 1.0
@@ -136,4 +142,5 @@ class golinski(Model):
 									lambda args: 0 <= 2 - args[0] + 3*args[1],
 									lambda args: 0 <= 4 - (args[2]-3)**2 - args[3],
 									lambda args: 0 <= (args[4]-3)**3 + args[5] - 4]
-		
+
+

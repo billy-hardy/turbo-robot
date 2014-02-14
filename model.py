@@ -60,6 +60,10 @@ class Model:
 		for o in self.objs:
 			ret.append(o.calc(ind))
 		return ret
+	def baseline(self):
+		for _ in xrange(100):
+			ind = self.get_ind()
+			self.get_dep(ind)
 	def valid(self, args):
 		for f in self.const:
 			if not f(args):
