@@ -1,7 +1,6 @@
 import sys
 sys.dont_write_bytecode=True
 from models import *
-from stats import run
 from do import *
 
 def sa(m=kursawe, runs=50,
@@ -49,4 +48,3 @@ def sa(m=kursawe, runs=50,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
 			
-sa(m=fonseca,runs=50, eps=0.01, cohen=0.2)

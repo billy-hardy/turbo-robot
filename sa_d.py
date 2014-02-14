@@ -2,7 +2,5 @@ import sys
 sys.dont_write_bytecode=True
 from sa import *
 
-print "fonseca"
-print sa(fonseca)
-print "\nkursawe"
-print sa(kursawe)
+sa(m=fonseca,runs=50, eps=0.01, cohen=0.2)
+

@@ -22,9 +22,11 @@ class Num:
 class Dec(Num):
 	def __init__(self, name, low=-5, high=5):
 		Num.__init__(self, name, low, high)
-	def get_val(self):
-		self.val = urand(self.low, self.high)
-		return self.val
+	def get_val(self, lo=0, hi=1):
+		off_low = (self.high-self.low)*lo
+		off_high = (self.high-self.low)*hi
+		val = self.low+urand(off_low, off_high)
+		return val
 
 class Obj(Num):
 	def __init__(self, name, func, opt, low=0, high=1):
@@ -53,6 +55,13 @@ class Model:
 			if self.valid(ret):
 				return ret
 		return None
+	def fiddle(self, ind, k, lo=0, hi=1):
+		for _ in xrange(100):
+			ret = ind[:]
+			ret[k] = self.decs[k].get_val(lo, hi)
+			if self.valid(ret):
+				return ret
+		return ind
 	def get_dep(self, ind):
 		ret = []
 		for o in self.objs:
