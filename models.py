@@ -121,6 +121,10 @@ class golinski(Model):
 			ret = ret**.5
 			ret /= 0.1*(args[5]**3)
 			return ret
+		def g11(args):
+			a = 745.0*args[4]/(args[1]*args[2])
+			b = 1.575 * 10**8
+			return ((a**2 + b)**.5)/(0.1*(args[7]**3)) <= 1100
 		self.decs = [Dec("x1", 2.6, 3.6),
 								 Dec("x2", 0.7, 0.8),
 								 Dec("x3", 17.0, 28.0),
@@ -130,11 +134,15 @@ class golinski(Model):
 								 Dec("x7", 5.0, 5.5)]
 		self.objs = [Obj("f1", f1, minimize, 0.0, 10.0),
 								 Obj("f2", f2, minimize, 0.0, 10.0)]
-		self.const = [lambda args: 0 <= args[0] + args[1] - 2,
-									lambda args: 0 <= 6 - args[0] - args[1],
-									lambda args: 0 <= 2 - args[1] + args[0],
-									lambda args: 0 <= 2 - args[0] + 3*args[1],
-									lambda args: 0 <= 4 - (args[2]-3)**2 - args[3],
-									lambda args: 0 <= (args[4]-3)**3 + args[5] - 4]
-
+		self.const = [lambda args: 1.0/(args[0]*(args[1]**2)*args[2]) - 1.0/27 <= 0,
+									lambda args: 1.0/(args[0]*(args[1]**2)*args[2]) - 1.0/27 <= 0,
+									lambda args: args[3]**3/(args[1]*(args[2]**2)*args[5]) - 1.0/1.93 <= 0,
+									lambda args: args[5]**3/(args[1]*(args[2]**2)*args[6]) - 1.0/1.93 <= 0,
+									lambda args: args[1]*args[2] - 40 <= 0,
+									lambda args: args[0]/args[1] - 12 <= 0,
+									lambda args: 5 - args[0]/args[1] <= 0,
+									lambda args: 1.9 - args[3] + 1.5*args[5] <= 0,
+									lambda args: 1.9 - args[4] + 1.5*args[6] <= 0,
+									lambda args: f2(args) <= 1300,
+									g11]
 
