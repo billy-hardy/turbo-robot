@@ -9,15 +9,15 @@ e = math.e
 sin = math.sin
 inf = 10.0**32
 ninf = -1*inf
-eps = 10.0**-32
+tiny = 10.0**-32
 
 class Num:
-	def __init__(self, name, low, high):
+	def __init__(self, name, low, high, opt=lambda x: x):
 		self.name = name
 		self.low = low
 		self.high = high
 	def norm(self, val):
-		return (val - self.low)*1.0/(self.high - self.low + eps)
+		return self.opt((val - self.low)*1.0/(self.high - self.low + tiny))
 
 class Dec(Num):
 	def __init__(self, name, low=-5, high=5):
@@ -38,8 +38,6 @@ class Obj(Num):
 		elif y < self.low:
 			self.low = y
 		return y
-	def norm(self, val):
-		return self.opt(Num.norm(self,val))
 
 class Model:
 	def __init__(self):
@@ -73,7 +71,7 @@ class Model:
 		ret = 0.0
 		for i,o in enumerate(self.objs):
 			ret += o.norm(s[i])
-		return ret/(len(s)+eps)
+		return ret/(len(s)+tiny)
 	def stats(self, l):
 		m = [0]*len(self.objs)
 		for x in l[::len(self.objs)]:
