@@ -4,4 +4,5 @@ from models import *
 
 m = golinski()
 ind = m.get_ind()
-print m.get_dep(ind)
+dep = m.get_dep(ind)
+print m.score(dep)

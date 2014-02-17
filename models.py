@@ -9,17 +9,19 @@ class schaffer(Model):
 	def __init__(self):
 		Model.__init__(self)
 		schaffer.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		f1 = lambda args: args[0]**2
 		f2 = lambda args: (args[0]-2)**2
-		self.decs = [Dec("x1",-(10**5),10**5)]
-		self.objs = [Obj("f1", f1, maximize, 0.0, 10.0),
-								 Obj("f2", f2, maximize, 0.0, 10.0)]
+		self.decs = [Dec(-(10**5),10**5)]
+		self.objs = [Obj(f1, maximize),
+								 Obj(f2, maximize)]
 
 class kursawe(Model):
 	def __init__(self):
 		Model.__init__(self)
 		kursawe.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			ret = 0.0
@@ -32,16 +34,17 @@ class kursawe(Model):
 			for one in args:
 				ret += abs(one)**0.8 + 5*sin(one**3)
 			return ret
-		self.decs = [Dec("x1",-5,5), 
-								 Dec("x2",-5,5), 
-								 Dec("x3",-5,5)]
-		self.objs = [Obj("f1", f1, maximize, 0.0, 10.0),
-								 Obj("f2", f2, maximize, 0.0, 10.0)]
+		self.decs = [Dec(-5,5), 
+								 Dec(-5,5), 
+								 Dec(-5,5)]
+		self.objs = [Obj(f1, maximize),
+								 Obj(f2, maximize)]
 
 class fonseca(Model):
 	def __init__(self):
 		Model.__init__(self)
 		fonseca.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			temp = 0.0
@@ -55,16 +58,17 @@ class fonseca(Model):
 				temp += (x + 1/((i+1)**.5))**2
 			ret = e**(-temp)
 			return 1 - ret
-		self.decs = [Dec("x1",-4,4),
-								 Dec("x2",-4,4),
-								 Dec("x3",-4,4)]
-		self.objs = [Obj("f1",f1, minimize, 0.0, 1.0),
-								 Obj("f2",f2, maximize, 0.0, 1.0)]
+		self.decs = [Dec(-4,4),
+								 Dec(-4,4),
+								 Dec(-4,4)]
+		self.objs = [Obj(f1, minimize),
+								 Obj(f2, maximize)]
 
 class zdt1(Model):
 	def __init__(self):
 		Model.__init__(self)
 		zdt1.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			return args[0]
@@ -77,14 +81,15 @@ class zdt1(Model):
 			ret = 9*(ret)/(len(args)-1)
 			return ret + 1
 		for i in xrange(30):
-			self.decs.append(Dec("x%i"%(i+1),0,1))
-		self.objs = [Obj("f1",f1,minimize,0,1),
-								 Obj("f2",f2,minimize,-10,10)]
+			self.decs.append(Dec(0,1))
+		self.objs = [Obj(f1,minimize),
+								 Obj(f2,minimize)]
 
 class zdt2(Model):
 	def __init__(self):
 		Model.__init__(self)
 		zdt2.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			return args[0]
@@ -98,14 +103,15 @@ class zdt2(Model):
 			return ret + 1
 		self.decs = []
 		for i in xrange(30):
-			self.decs.append(Dec("x%i"%(i+1),0,1))
-		self.objs = [Obj("f1",f1,minimize,0,1),
-								 Obj("f2",f2,minimize,-10,10)]
+			self.decs.append(Dec(0,1))
+		self.objs = [Obj(f1,minimize),
+								 Obj(f2,minimize)]
 
 class golinski(Model):
 	def __init__(self):
 		Model.__init__(self)
 		golinski.add_vars(self)
+		self.baseline()
 	def add_vars(self):
 		def f1(args):
 			ret = 1.0
@@ -116,7 +122,7 @@ class golinski(Model):
 			ret += 0.7854*(args[3]*(args[5]**2) + args[4]*(args[6]**2))
 			return ret
 		def f2(args):
-			ret = 745.0*args[3]/(args[1]*args[2])
+			ret = (745.0*args[3]/(args[1]*args[2]))**2
 			ret += 1.69*(10**7)
 			ret = ret**.5
 			ret /= 0.1*(args[5]**3)
@@ -124,16 +130,16 @@ class golinski(Model):
 		def g11(args):
 			a = 745.0*args[4]/(args[1]*args[2])
 			b = 1.575 * 10**8
-			return ((a**2 + b)**.5)/(0.1*(args[7]**3)) <= 1100
-		self.decs = [Dec("x1", 2.6, 3.6),
-								 Dec("x2", 0.7, 0.8),
-								 Dec("x3", 17.0, 28.0),
-								 Dec("x4", 7.3, 8.3),
-								 Dec("x5", 7.3, 8.3),
-								 Dec("x6", 2.9, 3.9),
-								 Dec("x7", 5.0, 5.5)]
-		self.objs = [Obj("f1", f1, minimize, 0.0, 10.0),
-								 Obj("f2", f2, minimize, 0.0, 10.0)]
+			return ((a**2 + b)**.5)/(0.1*(args[6]**3)) <= 1100
+		self.decs = [Dec(2.6, 3.6),
+								 Dec(0.7, 0.8),
+								 Dec(17.0, 28.0),
+								 Dec(7.3, 8.3),
+								 Dec(7.3, 8.3),
+								 Dec(2.9, 3.9),
+								 Dec(5.0, 5.5)]
+		self.objs = [Obj(f1, minimize),
+								 Obj(f2, minimize)]
 		self.const = [lambda args: 1.0/(args[0]*(args[1]**2)*args[2]) - 1.0/27 <= 0,
 									lambda args: 1.0/(args[0]*(args[1]**2)*args[2]) - 1.0/27 <= 0,
 									lambda args: args[3]**3/(args[1]*(args[2]**2)*args[5]) - 1.0/1.93 <= 0,
@@ -142,7 +148,7 @@ class golinski(Model):
 									lambda args: args[0]/args[1] - 12 <= 0,
 									lambda args: 5 - args[0]/args[1] <= 0,
 									lambda args: 1.9 - args[3] + 1.5*args[5] <= 0,
-									lambda args: 1.9 - args[4] + 1.5*args[6] <= 0,
+									lambda args: 1.9 - args[4] + 1.1*args[6] <= 0,
 									lambda args: f2(args) <= 1300,
 									g11]
 

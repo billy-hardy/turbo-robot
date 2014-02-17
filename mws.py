@@ -3,7 +3,7 @@ sys.dont_write_bytecode=True
 from models import *
 from do import *
 
-def max_walk(m=fonseca, tries=50,
+def max_walk(m=schaffer, tries=50,
 						 threshold=0.99, p=0.5,
 						 era=30, eps=0.01, cohen=0.2):
 	def calc(model, do, i, ind_old, k, lo=0, hi=1):

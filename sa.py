@@ -21,7 +21,6 @@ def sa(m=kursawe, runs=50,
 	outer = do(range(runs))
 	for run, outer in outer.loop():
 		model = m()
-		model.baseline()
 		ind = ind_b = model.get_ind()
 		dep = model.get_dep(ind)
 		e = e_b = model.score(dep)

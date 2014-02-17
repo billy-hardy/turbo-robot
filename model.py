@@ -11,35 +11,33 @@ inf = 10.0**32
 ninf = -1*inf
 tiny = 10.0**-32
 
-class Num:
-	def __init__(self, name, low, high, opt=lambda x: x):
-		self.name = name
+
+class Dec:
+	def __init__(self, low=-5, high=5):
 		self.low = low
 		self.high = high
-	def norm(self, val):
-		return self.opt((val - self.low)*1.0/(self.high - self.low + tiny))
-
-class Dec(Num):
-	def __init__(self, name, low=-5, high=5):
-		Num.__init__(self, name, low, high)
 	def get_val(self, lo=0, hi=1):
 		off_low = (self.high-self.low)*lo
 		off_high = (self.high-self.low)*hi
 		val = self.low+urand(off_low, off_high)
 		return val
 
-class Obj(Num):
-	def __init__(self, name, func, opt, low=0, high=1):
-		Num.__init__(self, name, low, high)
+class Obj:
+	def __init__(self, func, opt):
 		self.func = func
 		self.opt = opt
+		self.high = self.low = None
 	def calc(self, args):
 		y = self.func(args)
+		self.high = y if self.high is None else self.high
+		self.low = y if self.low is None else self.low
 		if y > self.high:
 			self.high = y
 		elif y < self.low:
 			self.low = y
 		return y
+	def norm(self, val):
+		return self.opt((val - self.low)*1.0/(self.high - self.low + tiny))
 
 class Model:
 	def __init__(self):
@@ -48,7 +46,7 @@ class Model:
 		self.const = []
 	def add_vars(self): pass
 	def get_ind(self):
-		for _ in xrange(100):
+		while True:
 			ret = []
 			for d in self.decs:
 				ret.append(d.get_val())
@@ -56,7 +54,7 @@ class Model:
 				return ret
 		return None
 	def fiddle(self, ind, k, lo=0, hi=1):
-		for _ in xrange(100):
+		for _ in xrange(1000):
 			ret = ind[:]
 			ret[k] = self.decs[k].get_val(lo, hi)
 			if self.valid(ret):
