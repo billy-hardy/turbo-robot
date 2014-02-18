@@ -83,7 +83,7 @@ class do:
 		before = 0
 		for i in self.iterator:
 			now = self.get_era(i)
-			if before and now != before:
+			if before!=0 and now != before:
 				if self.early_stop(before):
 					break
 			before = now

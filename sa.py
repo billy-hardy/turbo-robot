@@ -5,7 +5,7 @@ from do import *
 
 def sa(m=kursawe, runs=50,
 			 era=30, kmax=1000,
-			 eps=0.1, p=0.33, cohen=0.2):
+			 eps=0.01, p=0.33, cohen=0.2):
 	def fiddle(model, ind):
 		ret = []
 		for i,d in enumerate(model.decs):
@@ -19,6 +19,7 @@ def sa(m=kursawe, runs=50,
 		y = rand()
 		return x < y
 	outer = do(range(runs))
+	ind_b = e_b = 0
 	for run, outer in outer.loop():
 		model = m()
 		ind = ind_b = model.get_ind()
@@ -42,8 +43,9 @@ def sa(m=kursawe, runs=50,
 			elif maybe(e, e_n, k/kmax):
 				ind = ind_n[:]
 				e = e_n
-			inner.seen(k, best=e_b, every=e)
+			inner.seen(k, best=e_b, every=e_n)
 	done(outer, 0, 1,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
-			
+	return ind_b, e_b
+print sa(fonseca)

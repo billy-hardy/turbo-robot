@@ -14,7 +14,7 @@ class schaffer(Model):
 		f1 = lambda args: args[0]**2
 		f2 = lambda args: (args[0]-2)**2
 		self.decs = [Dec(-(10**5),10**5)]
-		self.objs = [Obj(f1, maximize),
+		self.objs = [Obj(f1, minimize),
 								 Obj(f2, maximize)]
 
 class kursawe(Model):
@@ -63,7 +63,6 @@ class fonseca(Model):
 								 Dec(-4,4)]
 		self.objs = [Obj(f1, minimize),
 								 Obj(f2, maximize)]
-
 class zdt1(Model):
 	def __init__(self):
 		Model.__init__(self)
