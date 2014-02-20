@@ -22,8 +22,6 @@ def max_walk(m=kursawe, tries=50,
 							 halt_on="best", era=era,
 							 also=outer, cohen=cohen)
 		for i, inner in inner.loop():
-#			if e_b > threshold:
-#				return ind
 			k = int(rand()*len(model.decs))
 			if p < rand():
 				ind_n, e_n = calc(model, inner, i, ind, k)
@@ -40,14 +38,11 @@ def max_walk(m=kursawe, tries=50,
 					if e_n > e:
 						ind, e = ind_n[:], e_n
 					inner.seen(i, best=e_b, every=e_n)
+					inner.loop()
 	done(outer, 0, 1,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
-
+	return ind_b, e_b
 def say(*lst):
 	sys.stdout.write(','.join(map(str,lst)))
 	sys.stdout.flush()
-
-#max_walk(kursawe)
-max_walk(fonseca)
-#max_walk(schaffer)

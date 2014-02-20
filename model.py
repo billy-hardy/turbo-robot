@@ -21,6 +21,8 @@ class Dec:
 		off_high = (self.high-self.low)*hi
 		val = self.low+urand(off_low, off_high)
 		return val
+	def tighten(self, val):
+		return max(self.low, min(val, self.max))
 
 class Obj:
 	def __init__(self, func, opt):

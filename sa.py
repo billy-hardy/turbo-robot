@@ -15,7 +15,7 @@ def sa(m=kursawe, runs=50,
 				ret.append(ind[i])
 		return ret
 	def maybe(old,new,t):
-		x = math.e**((old - new)*1.0/t)
+		x = math.e**((old - new)*1.0/max(t, 1))
 		y = rand()
 		return x < y
 	outer = do(range(runs))
@@ -28,9 +28,7 @@ def sa(m=kursawe, runs=50,
 		inner = do(range(kmax),
 							 eps=eps, halt_on="best",
 							 era=era, also=outer, cohen=cohen)
-		k = 0.0
-		for _, inner in inner.loop():
-			k+=1
+		for k, inner in inner.loop():
 			ind_n = fiddle(model,ind[:])
 			dep_n = model.get_dep(ind_n[:])
 			e_n = model.score(dep_n)
@@ -40,7 +38,7 @@ def sa(m=kursawe, runs=50,
 			if e_n > e:
 				ind = ind_n[:]
 				e = e_n
-			elif maybe(e, e_n, k/kmax):
+			elif maybe(e, e_n, float(k)/kmax):
 				ind = ind_n[:]
 				e = e_n
 			inner.seen(k, best=e_b, every=e_n)
@@ -48,4 +46,3 @@ def sa(m=kursawe, runs=50,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
 	return ind_b, e_b
-print sa(fonseca)
