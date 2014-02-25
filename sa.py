@@ -18,14 +18,14 @@ def sa(m=kursawe, runs=50,
 		x = math.e**((old - new)*1.0/max(t, 1))
 		y = rand()
 		return x < y
-	outer = do(range(runs))
+	outer = do(xrange(runs))
 	ind_b = e_b = 0
 	for run, outer in outer.loop():
 		model = m()
 		ind = ind_b = model.get_ind()
 		dep = model.get_dep(ind)
 		e = e_b = model.score(dep)
-		inner = do(range(kmax),
+		inner = do(xrange(kmax),
 							 eps=eps, halt_on="best",
 							 era=era, also=outer, cohen=cohen)
 		for k, inner in inner.loop():

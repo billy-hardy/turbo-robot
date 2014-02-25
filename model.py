@@ -22,7 +22,7 @@ class Dec:
 		val = self.low+urand(off_low, off_high)
 		return val
 	def tighten(self, val):
-		return max(self.low, min(val, self.max))
+		return max(self.low, min(val, self.high))
 
 class Obj:
 	def __init__(self, func, opt):
@@ -90,6 +90,8 @@ class Model:
 		for i,o in enumerate(self.objs):
 			ret += "mean %s: %0.2f\n" % (o.name, m[i]/len(l[::len(self.objs)]))
 		return ret
+	def tighten(self, i, val):
+		return self.decs[i].tighten(val)
 
 def to_str(ind, dep, e):
 	args = []

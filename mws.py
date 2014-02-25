@@ -43,6 +43,7 @@ def max_walk(m=kursawe, tries=50,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
 	return ind_b, e_b
+
 def say(*lst):
 	sys.stdout.write(','.join(map(str,lst)))
 	sys.stdout.flush()

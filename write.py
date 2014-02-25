@@ -1,7 +1,7 @@
 import sys
 from subprocess import call
 
-out = ["a2ps", "--center-title=472:%s Hardy, Wood"%sys.argv[1], "-qr2gC", "-o", sys.argv[1]]
+out = ["a2ps", "-T2", "--center-title=472:%s Hardy, Wood"%sys.argv[1], "-qr2gC", "-o", sys.argv[1]]
 for x in sys.argv[2:]:
 	out.append("%s" %x)
 call(out)
