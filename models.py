@@ -75,7 +75,7 @@ class zdt1(Model):
 			return g(args)*(1-(args[0]/g(args))**.5)
 		def g(args):
 			ret = 0
-			for x in args:
+			for x in args[1:]:
 				ret += x
 			ret = 9*(ret)/(len(args)-1)
 			return ret + 1

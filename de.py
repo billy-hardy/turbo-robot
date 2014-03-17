@@ -1,6 +1,7 @@
 import sys
 sys.dont_write_bytecode=True
 from models import *
+from do import *
 
 class sample:
 	id = 0
@@ -24,7 +25,7 @@ class sample:
 def r(max):
 	return int(random.uniform(0,max))
 
-def de(m=kursawe, max_rep=100,
+def de(m=kursawe, max_rep=100, runs=50,
 			 pop=100, f=0.75, cf=0.3,
 			 eps=0.01, era=30, cohen=0.2):
 	def update(f,cf,frontier,total=0.0,n=0):
@@ -69,8 +70,13 @@ def de(m=kursawe, max_rep=100,
 		inner = do(xrange(max_rep),
 							 eps=eps,halt_on="best",
 							 era=era,also=outer,cohen=cohen)
-		for k in xrange(max_rep):
+		for k,inner in inner.loop():
 			total, n = update(f, cf, pareto)
 			if total/(n+(1/inf)) > (1-eps):
 				break
-		return pareto
+			for node in pareto:
+				inner.seen(k, best=node.score)
+	done(outer, 0, 1,
+			 key=lambda x: '%2d'%x,
+			 value = lambda x: '%4.2f'%x)
+	return pareto

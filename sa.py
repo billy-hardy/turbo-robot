@@ -15,7 +15,7 @@ def sa(m=kursawe, runs=50,
 				ret.append(ind[i])
 		return ret
 	def maybe(old,new,t):
-		x = math.e**((old - new)*1.0/max(t, 1))
+		x = math.e**((old - new)*1.0/max(t, 0.01))
 		y = rand()
 		return x < y
 	outer = do(xrange(runs))

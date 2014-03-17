@@ -3,7 +3,7 @@ sys.dont_write_bytecode=True
 from models import *
 from do import *
 
-def issamp(model=kursawe, max_tries=100):
+def isamp(model=kursawe, max_tries=100):
 	era = 100
 	bin = 10
 	base = 0.9
