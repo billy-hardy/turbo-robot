@@ -42,7 +42,8 @@ def sa(m=kursawe, runs=50,
 				ind = ind_n[:]
 				e = e_n
 			inner.seen(k, best=e_b, every=e_n)
-	done(outer, 0, 1,
-			 key=lambda x: '%2d'%x,
-			 value = lambda x: '%4.2f'%x)
-	return ind_b, e_b
+#	done(outer, 0, 1,
+#			 key=lambda x: '%2d'%x,
+#			 value = lambda x: '%4.2f'%x)
+	print e_b
+sa()

@@ -5,35 +5,51 @@ from do import *
 
 def isamp(model=kursawe, max_tries=100):
 	era = 100
-	bin = 10
+	bin_num = 100
 	base = 0.9
 	jiggle = 0.2
 	m = model()
+	ans = None
 	for _ in xrange(max_tries):
-		constraints = [None] * len(m.decs)
+		constraints = [None]*len(m.decs)
 		before = 0
 		for _ in m.decs:
 			sum = 0
 			bias = {}
+			for i in xrange(len(m.decs)):
+				for j in xrange(bin_num):
+					bias[i,j] = 0
 			for k in xrange(era):
 				ind = m.get_ind()
-				for c in constraints:
+				for i,c in enumerate(constraints):
 					if c:
-						ind[c.pos] = c.get_val()
+						ind[i] = m.decs[i].get_val(c[0],c[1])
 				s = m.score(m.get_dep(ind))
 				sum += s
-				for d in ind:
-#START HERE
-					r = divide d into a bin
-					bias[r] += s*(base + jiggle*rand())
-			best = range with max bias that is not contrained
-			constraints.append(best)
+				for i,d in enumerate(ind):
+					bin_size = (m.decs[i].high - m.decs[i].low)/bin_num
+					r = int(bin_size*(d-m.decs[i].low))
+					bias[i,r] += s*(base + jiggle*rand())
+			b_1, b_2 = -1,-1
+			for i in xrange(len(ind)):
+				if not constraints[i]:
+					for j in xrange(bin_num):
+						if b_1 == -1 \
+							     or bias[b_1,b_2] < bias[i,j]:
+							b_1,b_2 = i,j
+			n_dec = m.decs[b_1]
+			n_const = [float(b_2)/bin_num, float(b_2+1)/bin_num]
+			constraints[b_1] = n_const[:]
 			now = sum/len(m.decs)
+			ans = ind[:]
 			if now < before:
 				break
 			else:
 				before = now
+		print m.score(m.get_dep(ans))
+isamp()
 
+'''
 class range:
 	def __init__(self, length, hi, lo):
 		self.length = length
@@ -118,3 +134,4 @@ def plot2d(x,y,xlabel="x",ylabel="y",
     plt.plot(x, y, 'ro')
     plt.subplots_adjust(bottom=0.2,left=0.2)
     plt.savefig(file) if file else plt.show()
+'''
