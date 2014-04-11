@@ -18,7 +18,7 @@ def max_walk(m=kursawe, tries=50,
 		ind_b = ind = model.get_ind()
 		dep_b = dep = model.get_dep(ind)
 		e_b = e = model.score(dep)
-		inner = do(range(100), eps=eps,
+		inner = do(xrange(100), eps=eps,
 							 halt_on="best", era=era,
 							 also=outer, cohen=cohen)
 		for i, inner in inner.loop():
@@ -38,7 +38,6 @@ def max_walk(m=kursawe, tries=50,
 					if e_n > e:
 						ind, e = ind_n[:], e_n
 					inner.seen(i, best=e_b, every=e_n)
-					inner.loop()
 	done(outer, 0, 1,
 			 key=lambda x: '%2d'%x,
 			 value = lambda x: '%4.2f'%x)
@@ -47,3 +46,5 @@ def max_walk(m=kursawe, tries=50,
 def say(*lst):
 	sys.stdout.write(','.join(map(str,lst)))
 	sys.stdout.flush()
+
+max_walk()
